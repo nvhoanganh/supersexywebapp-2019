@@ -56,7 +56,7 @@ spec:
     spec:
       containers:
       - name: worker
-        image: nvhoanganh1909/rbus-webspa:dev2
+        image: nvhoanganh1909/rbus-webspa:stable
         env:
         - name: NODE_ENV
           value: "production"

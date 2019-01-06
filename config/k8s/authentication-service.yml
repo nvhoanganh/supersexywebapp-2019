@@ -51,10 +51,10 @@ spec:
     spec:
       containers:
       - name: worker
-        image: nvhoanganh1909/authentication-service:stable
+        image: nvhoanganh1909/authentication-service:stable.1.0.0
         readinessProbe:
           httpGet:
-            path: /healthz
+            path: /
             port: 80
           initialDelaySeconds: 3
           periodSeconds: 3

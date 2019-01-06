@@ -54,7 +54,7 @@ namespace authenticationapi
 				app.UseDeveloperExceptionPage();
 			}
 			
-			app.UseHealthChecks("/healthz");
+			app.UseHealthChecks("/");
 			app.UseCors(config => config
 				.AllowAnyOrigin()
 				.AllowAnyHeader()
