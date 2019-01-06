@@ -33,22 +33,21 @@ metadata:
     app: rbus
     tier: apigateway
     service: web-bff
-    release: stable
 spec:
   selector:
     matchLabels:
       app: rbus
       tier: apigateway
-      release: stable
       service: web-bff
+      release: stable
   replicas: 2
   template:
     metadata:
       labels:
         app: rbus
         tier: apigateway
-        release: stable
         service: web-bff
+        release: stable
     spec:
       containers:
       - name: worker

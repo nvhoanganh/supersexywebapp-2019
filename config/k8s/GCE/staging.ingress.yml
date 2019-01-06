@@ -14,7 +14,7 @@ spec:
         paths:
           - path: /api/*
             backend:
-              serviceName: apigateway-svc
+              serviceName: webbff-svc
               servicePort: 80
           - path: /*
             backend:
@@ -24,7 +24,7 @@ spec:
         paths:
           - path: /api/*
             backend:
-              serviceName: apigateway-svc
+              serviceName: webbff-svc
               servicePort: 80
           - path: /*
             backend:

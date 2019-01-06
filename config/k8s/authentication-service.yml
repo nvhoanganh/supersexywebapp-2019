@@ -33,7 +33,6 @@ metadata:
     app: rbus
     tier: backend
     service: authentication-service
-    release: stable
 spec:
   selector:
     matchLabels:
