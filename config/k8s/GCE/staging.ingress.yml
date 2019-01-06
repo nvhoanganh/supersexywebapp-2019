@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: dockerdemo-ingress
+  labels:
+    app: dockerdemo
+    tier: ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: 'dockerdemo-ip'
+spec:
+  rules:
+    - host: staging.35.241.14.155.xip.io
+      http:
+        paths:
+          - path: /api/*
+            backend:
+              serviceName: apigateway-svc
+              servicePort: 80
+          - path: /*
+            backend:
+              serviceName: webui-svc
+              servicePort: 80
+    - http:
+        paths:
+          - path: /api/*
+            backend:
+              serviceName: apigateway-svc
+              servicePort: 80
+          - path: /*
+            backend:
+              serviceName: webui-svc
+              servicePort: 80

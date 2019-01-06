@@ -1,0 +1,227 @@
+#################################
+#        DATABASE SERVICE
+#################################
+apiVersion: v1
+kind: Service
+metadata:
+  # this is the name we used in our Connection String
+  name: db
+  labels:
+    app: dockerdemo
+    tier: database
+spec:
+  type: NodePort
+  ports:
+  - port: 1433
+    protocol: TCP
+  selector:
+    app: dockerdemo
+    tier: database
+
+#################################
+#        BACKEND SERVICE
+#################################
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: authservice
+  labels:
+    app: dockerdemo
+    tier: backend
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    app: dockerdemo
+    tier: backend
+
+#################################
+#        API GATEWAY SERVICE
+#################################
+---      
+apiVersion: v1
+kind: Service
+metadata:
+  name: apigateway-svc
+  labels:
+    app: dockerdemo
+    tier: apigateway
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    app: dockerdemo
+    tier: apigateway
+
+#################################
+#        UI SERVICE
+#################################
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webui-svc
+  labels:
+    app: dockerdemo
+    tier: ui
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    app: dockerdemo
+    tier: ui
+
+#################################
+#        DATABASE WORKLOAD
+#################################
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-deploy
+  labels:
+    app: dockerdemo
+    tier: database
+spec:
+  selector:
+    matchLabels:
+      app: dockerdemo
+      tier: database
+  replicas: 1
+  minReadySeconds: 10
+  template:
+    metadata:
+      labels:
+        app: dockerdemo
+        tier: database
+    spec:
+      containers:
+      - name: worker
+        image: microsoft/mssql-server-linux
+        env:
+        - name: SA_PASSWORD
+          value: "Password1"
+        - name: ACCEPT_EULA
+          value: "Y"
+        - name: MSSQL_PID
+          value: "Express"
+      
+#################################
+#        BACKEND WORKLOAD
+#################################
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authservice-deploy
+  labels:
+    app: dockerdemo
+    tier: backend
+    release: latest
+spec:
+  selector:
+    matchLabels:
+      app: dockerdemo
+      tier: backend
+  replicas: 1
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: dockerdemo
+        tier: backend
+    spec:
+      containers:
+      - name: worker
+        image: nvhoanganh1909/docker-demo-user-api:v4
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Production"
+
+#################################
+#        BACKEND WORKLOAD
+#################################
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apigw-deploy
+  labels:
+    app: dockerdemo
+    tier: apigateway
+    release: latest
+spec:
+  selector:
+    matchLabels:
+      app: dockerdemo
+      tier: apigateway
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dockerdemo
+        tier: apigateway
+    spec:
+      containers:
+      - name: worker
+        image: nvhoanganh1909/apigw-base:dev
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Production"
+        volumeMounts:
+        - mountPath: /app/configuration
+          name: config-volume
+      volumes:
+      - name: config-volume
+        configMap:
+          name: apigwconfig     
+
+#################################
+#        UI WORKLOAD
+#################################
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webui-deploy
+  labels:
+    app: dockerdemo
+    tier: ui
+    release: latest
+spec:
+  selector:
+    matchLabels:
+      app: dockerdemo
+      tier: ui
+  replicas: 1
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: dockerdemo
+        tier: ui
+        release: "4"
+    spec:
+      containers:
+      - name: worker
+        image: nvhoanganh1909/docker-demo-ui:4
+        env:
+        - name: NODE_ENV
+          value: "production"

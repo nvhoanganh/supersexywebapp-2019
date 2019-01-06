@@ -1,0 +1,64 @@
+
+#################################
+#        API GATEWAY SERVICE
+#################################
+---      
+apiVersion: v1
+kind: Service
+metadata:
+  name: authentication-service
+  labels:
+    app: rbus
+    tier: backend
+    service: authentication-service
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    app: rbus
+    tier: backend
+    service: authentication-service
+
+#################################
+#        BACKEND WORKLOAD
+#################################
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authentication-service-deploy
+  labels:
+    app: rbus
+    tier: backend
+    service: authentication-service
+    release: stable
+spec:
+  selector:
+    matchLabels:
+      app: rbus
+      tier: backend
+      service: authentication-service
+      release: stable
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: rbus
+        tier: backend
+        service: authentication-service
+        release: stable
+    spec:
+      containers:
+      - name: worker
+        image: nvhoanganh1909/authentication-service:stable
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Production"

@@ -1,0 +1,12 @@
+apiVersion: skaffold/v1beta2
+kind: Config
+build:
+  local:
+    push: false
+  artifacts:
+  - image: nvhoanganh1909/apigw-base
+    context: ./src/api-gateway/apigw-base
+deploy:
+  kubectl:
+    manifests:
+      - ./config/k8s/webbff-apigw.yml

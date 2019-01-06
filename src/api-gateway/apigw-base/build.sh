@@ -1,0 +1,1 @@
+docker build --rm -f "src\api-gateway\apigw-base\Dockerfile" -t nvhoanganh1909/apigw-base:dev "src\api-gateway\apigw-base"

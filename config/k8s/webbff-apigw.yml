@@ -1,0 +1,71 @@
+
+#################################
+#        API GATEWAY SERVICE
+#################################
+---      
+apiVersion: v1
+kind: Service
+metadata:
+  name: webbff-svc
+  labels:
+    app: rbus
+    tier: apigateway
+    service: web-bff
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    app: rbus
+    tier: apigateway
+    service: web-bff
+
+#################################
+#        BACKEND WORKLOAD
+#################################
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webbff-deploy
+  labels:
+    app: rbus
+    tier: apigateway
+    service: web-bff
+    release: stable
+spec:
+  selector:
+    matchLabels:
+      app: rbus
+      tier: apigateway
+      release: stable
+      service: web-bff
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: rbus
+        tier: apigateway
+        release: stable
+        service: web-bff
+    spec:
+      containers:
+      - name: worker
+        image: nvhoanganh1909/apigw-base:dev
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Production"
+        volumeMounts:
+        - mountPath: /app/configuration
+          name: config-volume
+      volumes:
+      - name: config-volume
+        configMap:
+          name: webbffconfigmap     

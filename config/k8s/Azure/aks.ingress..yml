@@ -1,0 +1,44 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: dockerdemo-ingress
+  labels:
+    app: dockerdemo
+    tier: ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: 'false'
+spec:
+  rules:
+    - host: staging.52.187.236.54.xip.io
+      http:
+        paths:
+          - path: /api
+            backend:
+              serviceName: apigateway-svc
+              servicePort: 80
+          - path: /
+            backend:
+              serviceName: webui-svc
+              servicePort: 80
+    - host: prod.52.187.236.54.xip.io
+      http:
+        paths:
+          - path: /api
+            backend:
+              serviceName: apigateway-svc
+              servicePort: 80
+          - path: /
+            backend:
+              serviceName: webui-svc
+              servicePort: 80
+    - http:
+        paths:
+          - path: /api
+            backend:
+              serviceName: apigateway-svc
+              servicePort: 80
+          - path: /
+            backend:
+              serviceName: webui-svc
+              servicePort: 80
