@@ -5,18 +5,16 @@ metadata:
   labels:
     app: dockerdemo
     tier: ingress
-  annotations:
-    kubernetes.io/ingress.global-static-ip-name: 'dockerdemo-ip'
 spec:
   rules:
-    - host: staging.35.241.14.155.xip.io
+    - host: staging.52.187.236.54.xip.io
       http:
         paths:
-          - path: /api/*
+          - path: /api
             backend:
               serviceName: webbff-svc
               servicePort: 80
-          - path: /*
+          - path: /
             backend:
               serviceName: webui-svc
               servicePort: 80
