@@ -52,7 +52,7 @@ spec:
         app: rbus
         tier: ui
         service: webspa
-        release: stable
+        version: stable
     spec:
       containers:
       - name: worker

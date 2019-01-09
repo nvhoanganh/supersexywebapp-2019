@@ -95,18 +95,21 @@ In this step, we will add a simple User management functionality to our system u
 
 ## Step 10: Manually deploy to Azure AKS
 
-### Part 1. set up AKS Cluster with static IP using HELM
+### Part 1. set up AKS Cluster
 1. create new AKS via Azure Portal
 1. download and install Azure CLI 
 1. switch context to AKS `az aks get-credentials --resource-group dockertest --name dockerdemo` where `dockertest` is the resource group name and `dockerdemo` is the name of your AKS cluster
 1. install [Helm](https://docs.helm.sh/using_helm/#quickstart-guide) and add to your PATH
 2. make sure current context for kubectl is your Azure AKS by running `kubectl.exe config current-context` and `kubectl.exe config use-context dockerdemo` to switch to the correct context
-3. run `helm init`
-4. get AKS Pods' resource group name by running `az aks show --resource-group dockertest --name dockerdemo --query nodeResourceGroup  -o tsv`
-5. create a static IP `az network public-ip create --resource-group MC_dockertest_dockerdemo_australiaeast --name dockerdemoIP --allocation-method static` and record the provisioned IP address in the response 
-6. instal nginx-ingress controller `helm install stable/nginx-ingress --namespace kube-system --set controller.service.loadBalancerIP="52.187.236.54" --set controller.replicaCount=2 --set rbac.create=false`
-7. Check status of ingress `kubectl get service -l app=nginx-ingress --namespace kube-system`
-   
+3. run (in Git Bash)
+```bash
+helm init
+kubectl create serviceaccount --namespace kube-system tiller
+kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
+```
+### Part 2: Install Istio
+1. install Istio using Helm https://istio.io/docs/setup/kubernetes/helm-install/
    
 ### Part 2: Create Staging and Prod namespace
 1. run `kubectl.exe create ns staging` and `kubectl.exe create ns prod` 
@@ -154,14 +157,13 @@ Now we will deploy the same app above to Google Cloud
 - get the ip address `gcloud compute addresses describe dockerdemo-ip --global`
 - run the following 3 commands
 
-```cmd
+```bash
 helm init
 kubectl create serviceaccount --namespace kube-system tiller
 kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
 kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
 ```
-- install nginx-ingress `helm install stable/nginx-ingress --namespace kube-system --set controller.service.loadBalancerIP="35.241.14.155" --set controller.replicaCount=2` where 35.241.14.155 is the newly created static IP
-
+ 
 ### Part 2: Create Staging and Prod namespace
 1. run `kubectl.exe create ns staging` and `kubectl.exe create ns prod` 
 2. create new staging and prod context `kubectl config set-context gke-dockerdemo-staging --namespace=staging --cluster=gke_dockerdemo-227313_asia-east1-a_your-first-cluster-1 --user=gke_dockerdemo-227313_asia-east1-a_your-first-cluster-1` and `kubectl config set-context gke-dockerdemo-prod --namespace=prod --cluster=gke_dockerdemo-227313_asia-east1-a_your-first-cluster-1 --user=gke_dockerdemo-227313_asia-east1-a_your-first-cluster-1`

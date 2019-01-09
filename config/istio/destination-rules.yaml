@@ -1,0 +1,44 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: webbff-svc
+spec:
+  host: webbff-svc
+  subsets:
+  - name: stable
+    labels:
+      version: stable
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: webui-svc
+spec:
+  host: webui-svc
+  subsets:
+  - name: stable
+    labels:
+      version: stable
+  - name: canary
+    labels:
+      version: canary
+  - name: alpha
+    labels:
+      version: canary
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: authentication-service
+spec:
+  host: authentication-service
+  subsets:
+  - name: stable
+    labels:
+      version: stable
+  - name: canary
+    labels:
+      version: canary
+  - name: alpha
+    labels:
+      version: canary

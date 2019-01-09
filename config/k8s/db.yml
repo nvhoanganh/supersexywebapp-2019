@@ -7,7 +7,7 @@ metadata:
   # this is the name we used in our Connection String
   name: db
   labels:
-    app: dockerdemo
+    app: rbus
     tier: database
 spec:
   type: NodePort
@@ -15,7 +15,7 @@ spec:
   - port: 1433
     protocol: TCP
   selector:
-    app: dockerdemo
+    app: rbus
     tier: database
 
 
@@ -28,19 +28,19 @@ kind: Deployment
 metadata:
   name: db-deploy
   labels:
-    app: dockerdemo
+    app: rbus
     tier: database
 spec:
   selector:
     matchLabels:
-      app: dockerdemo
+      app: rbus
       tier: database
   replicas: 1
   minReadySeconds: 10
   template:
     metadata:
       labels:
-        app: dockerdemo
+        app: rbus
         tier: database
     spec:
       containers:

@@ -1,0 +1,20 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: ngrok-webspa
+spec:
+  hosts:
+  - "78c59160.ngrok.io"
+  ports:
+  - number: 80
+    name: http
+    protocol: http
+  resolution: DNS
+  location: MESH_EXTERNAL
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: ngrok-webspa
+spec:
+  host: "78c59160.ngrok.io"

@@ -1,0 +1,23 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: webui-svc-localhost
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - rbus-gateway
+  http:
+  - match:
+    - uri:
+        prefix: "/"
+      headers:
+        x-user:
+          exact: debug
+    route:
+    - destination:
+        host: 5bcd7a83.ngrok.io
+        port:
+          number: 80
+    appendHeaders:
+      host: 5bcd7a83.ngrok.io

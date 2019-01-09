@@ -1,0 +1,30 @@
+#################################
+#        UI WORKLOAD
+#################################
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webui-deploy-canary
+spec:
+  selector:
+    matchLabels:
+      app: rbus
+      tier: ui
+      service: webspa
+      version: canary
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: rbus
+        tier: ui
+        service: webspa
+        version: canary
+    spec:
+      containers:
+      - name: worker
+        image: nvhoanganh1909/rbus-webspa:canary
+        env:
+        - name: NODE_ENV
+          value: "production"

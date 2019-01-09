@@ -39,7 +39,7 @@ spec:
       app: rbus
       tier: apigateway
       service: web-bff
-      release: stable
+      version: stable
   replicas: 2
   template:
     metadata:
@@ -47,7 +47,7 @@ spec:
         app: rbus
         tier: apigateway
         service: web-bff
-        release: stable
+        version: stable
     spec:
       containers:
       - name: worker
