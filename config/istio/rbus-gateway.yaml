@@ -59,3 +59,10 @@ spec:
     - destination:
         host: webui-svc
         subset: stable
+  - match:
+    - uri:
+        prefix: "/kiali"
+    route:
+    - destination:
+        host: webui-svc
+        subset: stable

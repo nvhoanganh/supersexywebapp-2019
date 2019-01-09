@@ -69,11 +69,9 @@ kubectl.exe get svc -n istio-system
 # run Grafana and http://localhost:3000/dashboard/db/istio-mesh-dashboard
 kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=grafana -o jsonpath='{.items[0].metadata.name}') 3000:3000 &
 
-# open http://localhost:3000/dashboard/db/istio-mesh-dashboard
 # run jaeger
 kubectl port-forward -n istio-system $(kubectl get pod -n istio-system -l app=jaeger -o jsonpath='{.items[0].metadata.name}') 16686:16686 &
 
 # run kiali
 kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=kiali -o jsonpath='{.items[0].metadata.name}') 20001:20001
-
 # open http://localhost:20001 and login with admin:admin
