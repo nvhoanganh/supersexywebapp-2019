@@ -30,7 +30,7 @@ namespace authenticationapi.Controllers
 		[ProducesResponseType(typeof(List<UserDto>), (int)HttpStatusCode.OK)]
 		public IEnumerable<UserDto> GetAll()
 		{
-			return _context.Users.Select(x => new UserDto { Id = x.Id, Email = x.Email, FirstName = x.FirstName, LastName = x.LastName });
+			return _context.Users.Select(x => new UserDto { Id = x.Id, Email = x.Email, FirstName = x.FirstName + "-Canary", LastName = x.LastName });
 		}
 
 		// GET: api/Users/5

@@ -1,0 +1,36 @@
+#################################
+#        BACKEND WORKLOAD
+#################################
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authentication-service-canary
+spec:
+  selector:
+    matchLabels:
+      app: rbus
+      tier: backend
+      service: authentication-service
+      version: canary
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: rbus
+        tier: backend
+        service: authentication-service
+        version: canary
+    spec:
+      containers:
+      - name: worker
+        image: nvhoanganh1909/authentication-service:canary.1.0.0
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Production"

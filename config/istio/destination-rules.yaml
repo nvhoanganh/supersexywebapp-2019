@@ -24,7 +24,7 @@ spec:
       version: canary
   - name: alpha
     labels:
-      version: canary
+      version: alpha
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
@@ -41,4 +41,4 @@ spec:
       version: canary
   - name: alpha
     labels:
-      version: canary
+      version: alpha
