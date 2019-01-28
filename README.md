@@ -68,7 +68,7 @@ In this step, we will add a simple User management functionality to our system u
 
 ## Step 8: Pushing images to Docker Hub
 1. Login to docker hub by running `docker login -u nvhoanganh1909`
-2. Tag the local image `docker tag f16 nvhoanganh1909/docker-demo-ui:latest` where `f16` is the first 3 characters of your image
+2. Tag the local image `docker tag f16 nvhoanganh1909/docker-demo-ui:latest` where `f16` is the first 3 characters of your imagek
 3. Push the newly tagged image `docker push nvhoanganh1909/docker-demo-ui:latest`
 4. Login to https://hub.docker.com/ and make sure you can see the new docker image
    

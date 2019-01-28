@@ -10,9 +10,10 @@ metadata:
     app: rbus
     tier: database
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
   - port: 1433
+    targetPort: 1433
     protocol: TCP
   selector:
     app: rbus
@@ -53,3 +54,10 @@ spec:
           value: "Y"
         - name: MSSQL_PID
           value: "Express"
+        volumeMounts:
+        - mountPath: "/var/opt/mssql"
+          name: mssql-data
+      volumes:
+        - name: mssql-data
+          persistentVolumeClaim:
+            claimName: mssql-data

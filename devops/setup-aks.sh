@@ -17,7 +17,7 @@ helm init
 # update helm repo
 helm repo update
 
-# create service account for hel tiller
+# create service account for helm tiller
 kubectl create serviceaccount --namespace kube-system tiller
 kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
 kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
@@ -34,12 +34,13 @@ kubectl config use-context rbus-staging
 # download istio from https://github.com/istio/istio/releases and add istioctl into your PATH
 # install istio into your k8s cluster using helm, enalbe kiali, grafana, tracing
 # from the location where you download istio from 
+
 cd /c/istio-1.0.5-win/istio-1.0.5
-
-helm install install/kubernetes/helm/istio --name istio --namespace istio-system --set kiali.enabled=true --set grafana.enabled=true --set tracing.enabled=true --set global.configValidation=false
-
+kubectl create ns istio-system
+helm template install/kubernetes/helm/istio --name istio --namespace istio-system --set kiali.enabled=true --set grafana.enabled=true --set tracing.enabled=true --set global.configValidation=false > $HOME/istio.yaml
+kubectl apply -f $HOME/istio.yaml
 # enable grafana and jaeger 
-helm upgrade --recreate-pods --namespace istio-system --set kiali.enabled=true --set grafana.enabled=true --set tracing.enabled=true --set global.configValidation=false --set sidecarInjectorWebhook.enabled=false istio install/kubernetes/helm/istio
+# helm upgrade --recreate-pods --namespace istio-system --set kiali.enabled=true --set grafana.enabled=true --set tracing.enabled=true --set global.configValidation=false --set sidecarInjectorWebhook.enabled=false istio install/kubernetes/helm/istio
 
 # make sure istio is now installed (kiali, zipkin, prometheus, grafana)
 kubectl get svc -n istio-system
@@ -86,7 +87,9 @@ for i in `seq 1 2000`; do curl http://207.46.228.149/api/auth/users; done
 
 # Clean up
 # delete resource group
-az.cmd group create --name rbus-asia
-az.cmd group create --name MC_rbus-asia_rbus_southeastasia
+az.cmd group delete --name rbus-asia
+az.cmd group delete --name MC_rbus-asia_rbus_southeastasia
 
 # kubectl apply -f <(istioctl kube-inject -f config/k8s/)>
+helm del --purge istio
+kubectl delete -f install/kubernetes/helm/istio/templates/crds.yaml -n istio-system

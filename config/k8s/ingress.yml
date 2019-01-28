@@ -3,11 +3,11 @@ kind: Ingress
 metadata:
   name: dockerdemo-ingress
   annotations:
-    kubernetes.io/ingress.class: "nginx"
-    ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: addon-http-application-routing
 spec:
   rules:
-    - http:
+    - host: demo.946aef69780f41978646.southeastasia.aksapp.io
+      http:
         paths:
           - path: /api
             backend:
