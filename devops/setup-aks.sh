@@ -2,7 +2,7 @@
 az.cmd login
 az.cmd account set --subscription "76d03a17-20be-4175-bbed-ca6d7819c68f"
 
-# create new Azure resource group
+# create new Azure resource group 
 az.cmd group create --name rbus-asia --location SoutheastAsia
 az.cmd aks create -g rbus-asia -n rbus --location SoutheastAsia --kubernetes-version 1.11.5 --enable-addons http_application_routing --generate-ssh-keys
 
