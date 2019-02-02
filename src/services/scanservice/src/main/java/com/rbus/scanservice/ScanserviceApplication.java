@@ -12,11 +12,13 @@ public class ScanserviceApplication {
 
 	@RequestMapping("/greeting")
     public String greeting(@RequestParam(value="name", defaultValue="World") String name) {
+		var d = "Hello";
+		if (d.isBlank()) {
+			System.out.println("it is blank");
+		}
         return name;
-    }
+    }		
 	public static void main(String[] args) {
 		SpringApplication.run(ScanserviceApplication.class, args);
 	}
-
 }
-
