@@ -5,6 +5,26 @@
    "version": "0.2.0",
    "configurations": [
     {
+        "type": "java",
+        "name": "CodeLens (Launch) - ScanserviceApplication",
+        "request": "launch",
+        "mainClass": "com.rbus.scanservice.ScanserviceApplication",
+        "projectName": "scanservice"
+    },
+    {
+        "type": "java",
+        "name": "CodeLens (Launch) - ScanworkerApplication",
+        "request": "launch",
+        "mainClass": "com.rbus.scanworker.ScanworkerApplication",
+        "projectName": "scanworker"
+    },
+    {
+        "type": "java",
+        "name": "CodeLens (Launch) - DemoApplication",
+        "request": "launch",
+        "mainClass": "com.rbus.scanworker.DemoApplication"
+    },
+    {
         "name": ".NET Core Launch (web)",
         "type": "coreclr",
         "request": "launch",
@@ -40,16 +60,6 @@
         "type": "coreclr",
         "request": "attach",
         "processId": "${command:pickProcess}"
-    },
-    {
-        "type": "java",
-        "name": "Spring Boot-ScanserviceApplication<scanservice>",
-        "request": "launch",
-        "cwd": "${workspaceFolder}",
-        "console": "internalConsole",
-        "mainClass": "com.rbus.scanservice.ScanserviceApplication",
-        "projectName": "scanservice",
-        "args": ""
     }
 ]
 }

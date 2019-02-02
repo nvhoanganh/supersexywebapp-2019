@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.rbus</groupId>
-	<artifactId>scanservice</artifactId>
+	<artifactId>scanworker</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>scanservice</name>
-	<description>Scan service</description>
+	<name>scanworker</name>
+	<description>Scan worker service</description>
 
 	<properties>
 		<java.version>11</java.version>
