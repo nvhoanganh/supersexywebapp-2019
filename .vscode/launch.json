@@ -60,6 +60,26 @@
         "type": "coreclr",
         "request": "attach",
         "processId": "${command:pickProcess}"
+    },
+    {
+        "type": "java",
+        "name": "Spring Boot-ConsumerApp<scanworker>",
+        "request": "launch",
+        "cwd": "${workspaceFolder}",
+        "console": "internalConsole",
+        "mainClass": "com.rbus.scanworker.ConsumerApp",
+        "projectName": "scanworker",
+        "args": ""
+    },
+    {
+        "type": "java",
+        "name": "Spring Boot-ProducerApp<scanservice>",
+        "request": "launch",
+        "cwd": "${workspaceFolder}",
+        "console": "internalConsole",
+        "mainClass": "com.rbus.scanservice.ProducerApp",
+        "projectName": "scanservice",
+        "args": ""
     }
 ]
 }
