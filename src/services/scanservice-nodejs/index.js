@@ -21,15 +21,13 @@ app.get('/scan', (req, res, next) => {
   });
 });
 
-app.get('/healthz', nocache, sendHealthz);
+app.get('/healthz', nocache, (req, res) => {
+  res.send('OK');
+});
 
 function nocache(req, res, next) {
   res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
   res.header('Expires', '-1');
   res.header('Pragma', 'no-cache');
   next();
-}
-
-function sendHealthz(req, res) {
-  res.send('OK');
 }
