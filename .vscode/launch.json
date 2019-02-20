@@ -1,85 +1,91 @@
 {
-   // Use IntelliSense to find out which attributes exist for C# debugging
-   // Use hover for the description of the existing attributes
-   // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
-   "version": "0.2.0",
-   "configurations": [
+  // Use IntelliSense to find out which attributes exist for C# debugging
+  // Use hover for the description of the existing attributes
+  // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+  "version": "0.2.0",
+  "configurations": [
+      {
+          "type": "node",
+          "request": "attach",
+          "name": "Attach by Process ID",
+          "processId": "${command:PickProcess}"
+      },
     {
-        "type": "java",
-        "name": "CodeLens (Launch) - ScanserviceApplication",
-        "request": "launch",
-        "mainClass": "com.rbus.scanservice.ScanserviceApplication",
-        "projectName": "scanservice"
+      "type": "java",
+      "name": "CodeLens (Launch) - ScanserviceApplication",
+      "request": "launch",
+      "mainClass": "com.rbus.scanservice.ScanserviceApplication",
+      "projectName": "scanservice"
     },
     {
-        "type": "java",
-        "name": "CodeLens (Launch) - ScanworkerApplication",
-        "request": "launch",
-        "mainClass": "com.rbus.scanworker.ScanworkerApplication",
-        "projectName": "scanworker"
+      "type": "java",
+      "name": "CodeLens (Launch) - ScanworkerApplication",
+      "request": "launch",
+      "mainClass": "com.rbus.scanworker.ScanworkerApplication",
+      "projectName": "scanworker"
     },
     {
-        "type": "java",
-        "name": "CodeLens (Launch) - DemoApplication",
-        "request": "launch",
-        "mainClass": "com.rbus.scanworker.DemoApplication"
+      "type": "java",
+      "name": "CodeLens (Launch) - DemoApplication",
+      "request": "launch",
+      "mainClass": "com.rbus.scanworker.DemoApplication"
     },
     {
-        "name": ".NET Core Launch (web)",
-        "type": "coreclr",
-        "request": "launch",
-        "preLaunchTask": "build",
-        "program": "${workspaceFolder}/src/api-gateway/apigw-base/bin/Debug/netcoreapp2.2/apigwbase.dll",
-        "args": [],
-        "cwd": "${workspaceFolder}/src/api-gateway/apigw-base",
-        "stopAtEntry": false,
-        "internalConsoleOptions": "openOnSessionStart",
-        "launchBrowser": {
-            "enabled": true,
-            "args": "${auto-detect-url}",
-            "windows": {
-                "command": "cmd.exe",
-                "args": "/C start ${auto-detect-url}"
-            },
-            "osx": {
-                "command": "open"
-            },
-            "linux": {
-                "command": "xdg-open"
-            }
+      "name": ".NET Core Launch (web)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/src/api-gateway/apigw-base/bin/Debug/netcoreapp2.2/apigwbase.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/src/api-gateway/apigw-base",
+      "stopAtEntry": false,
+      "internalConsoleOptions": "openOnSessionStart",
+      "launchBrowser": {
+        "enabled": true,
+        "args": "${auto-detect-url}",
+        "windows": {
+          "command": "cmd.exe",
+          "args": "/C start ${auto-detect-url}"
         },
-        "env": {
-            "ASPNETCORE_ENVIRONMENT": "Development"
+        "osx": {
+          "command": "open"
         },
-        "sourceFileMap": {
-            "/Views": "${workspaceFolder}/Views"
+        "linux": {
+          "command": "xdg-open"
         }
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/Views"
+      }
     },
     {
-        "name": ".NET Core Attach",
-        "type": "coreclr",
-        "request": "attach",
-        "processId": "${command:pickProcess}"
+      "name": ".NET Core Attach",
+      "type": "coreclr",
+      "request": "attach",
+      "processId": "${command:pickProcess}"
     },
     {
-        "type": "java",
-        "name": "Spring Boot-ConsumerApp<scanworker>",
-        "request": "launch",
-        "cwd": "${workspaceFolder}",
-        "console": "internalConsole",
-        "mainClass": "com.rbus.scanworker.ConsumerApp",
-        "projectName": "scanworker",
-        "args": ""
+      "type": "java",
+      "name": "Spring Boot-ConsumerApp<scanworker>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "mainClass": "com.rbus.scanworker.ConsumerApp",
+      "projectName": "scanworker",
+      "args": ""
     },
     {
-        "type": "java",
-        "name": "Spring Boot-ProducerApp<scanservice>",
-        "request": "launch",
-        "cwd": "${workspaceFolder}",
-        "console": "internalConsole",
-        "mainClass": "com.rbus.scanservice.ProducerApp",
-        "projectName": "scanservice",
-        "args": ""
+      "type": "java",
+      "name": "Spring Boot-ProducerApp<scanservice>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "mainClass": "com.rbus.scanservice.ProducerApp",
+      "projectName": "scanservice",
+      "args": ""
     }
-]
+  ]
 }
