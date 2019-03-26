@@ -17,3 +17,11 @@ spec:
             backend:
               serviceName: webui-svc
               servicePort: 80
+    - host: kafka.946aef69780f41978646.southeastasia.aksapp.io
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: my-confluent-oss-cp-kafka-rest
+              servicePort: 8082
+              

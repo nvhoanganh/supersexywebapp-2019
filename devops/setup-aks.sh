@@ -1,6 +1,6 @@
 # login and select the correct subscription
 az.cmd login
-az.cmd account set --subscription "76d03a17-20be-4175-bbed-ca6d7819c68f"
+az.cmd account set --subscription "76d03a17-20be-4175-bbkked-ca6d7819c68f"
 
 # create new Azure resource group
 az.cmd group create --name rbus-asia --location SoutheastAsia
@@ -18,9 +18,13 @@ helm init
 helm repo update
 
 # create service account for helm tiller
+kubectl -n kube-system delete deploy tiller-deploy
 kubectl create serviceaccount --namespace kube-system tiller
 kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
 kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
+
+#install kafka
+helm install confluent/cp-helm-charts --name my-confluent-oss
 
 # Create staging namespace
 kubectl create ns staging
