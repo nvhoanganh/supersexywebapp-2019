@@ -1,0 +1,1 @@
+docker build --rm -f "src\services\scanservice-nodejs\Dockerfile" -t nvhoanganh1909/scanservice-nodejs:1 src/services/scanservice-nodejs
